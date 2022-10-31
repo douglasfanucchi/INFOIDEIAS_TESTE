@@ -18,11 +18,13 @@ class Funcoes
         if ($ano < 100) {
             return 1;
         }
-        $units = $ano % 10;
+        $firstHalf = $ano % 10;
+        $firstHalf *= 10;
+        $firstHalf += floor($ano / 10) % 10;
         $firstTwoDigits = $ano;
         while (floor($firstTwoDigits / 100) != 0)
             $firstTwoDigits = floor($firstTwoDigits / 100);
-        if ($units == 0)
+        if ($firstHalf == 0)
             return $firstTwoDigits;
         return $firstTwoDigits + 1;
     }
