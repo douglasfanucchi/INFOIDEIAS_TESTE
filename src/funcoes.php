@@ -15,10 +15,19 @@ class Funcoes
 
      * */
     public function SeculoAno(int $ano): int {
-        
+        if ($ano < 100) {
+            return 1;
+        }
+        $units = $ano % 10;
+        $firstTwoDigits = $ano;
+        while (floor($firstTwoDigits / 100) != 0)
+            $firstTwoDigits = floor($firstTwoDigits / 100);
+        if ($units == 0)
+            return $firstTwoDigits;
+        return $firstTwoDigits + 1;
     }
 
-    
+
 	
 	
 	
@@ -36,8 +45,23 @@ class Funcoes
     Número = 29 resposta = 23
 
      * */
+    protected function isPrime(int $n) {
+        if ($n < 0)
+            $n *= -1;
+        if ($n == 1)
+            return false;
+        $i = $n - 1;
+        while ($i > 1) {
+            if ($n % $i == 0) {
+                return false;
+            }
+            $i--;
+        }
+        return true;
+    }
     public function PrimoAnterior(int $numero): int {
-        
+        while (!$this->isPrime(--$numero));
+        return $numero;
     }
 
 
@@ -66,7 +90,19 @@ class Funcoes
 
      * */
     public function SegundoMaior(array $arr): int {
-        
+        $greatest = 0;
+        $secondGreatest = 0;
+        foreach ($arr as $numbers) {
+            foreach ($numbers as $number) {
+                if ($number > $greatest) {
+                    $secondGreatest = $greatest;
+                    $greatest = $number;
+                } else if ($number > $secondGreatest) {
+                    $secondGreatest = $number;
+                }
+            }
+        }
+        return $secondGreatest;
     }
 	
 	
@@ -105,8 +141,24 @@ class Funcoes
     [3, 5, 67, 98, 3] true
 
      * */
-    
-	public function SequenciaCrescente(array $arr): boolean {
-        
+	public function SequenciaCrescente(array $arr): bool {
+        $unordedElementIndex = 0;
+        $unordedElementsQty = 0;
+        $arrCount = count($arr);
+        $i = 0;
+        $j = 0;
+        while ($i < $arrCount) {
+            $j = $i + 1;
+            while ($j < $arrCount) {
+                if ($arr[$i] >= $arr[$j] && $j != $unordedElementIndex) {
+                    $unordedElementIndex = $j;
+                    $unordedElementsQty++;
+                    break;
+                }
+                $j++;
+            }
+            $i++;
+        }
+        return $unordedElementsQty == 0 || $unordedElementsQty == 1;
     }
 }
